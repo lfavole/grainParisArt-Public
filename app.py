@@ -40,10 +40,15 @@ def getShowtimes(date):
 
 
 showtimes = []
-for i in range(7):
-    day_showtimes = getShowtimes(datetime.today() + timedelta(days=i))
-    showtimes.append(day_showtimes)
-    print(f"{len(day_showtimes)} séances récupéré {i+1}/7!")
+
+def load_showtimes():
+    if showtimes:
+        return
+
+    for i in range(7):
+        day_showtimes = getShowtimes(datetime.today() + timedelta(days=i))
+        showtimes.append(day_showtimes)
+        print(f"{len(day_showtimes)} séances récupéré {i+1}/7!")
 
 app = Flask(__name__)
 
@@ -91,6 +96,8 @@ def home():
 
     for i in range(7):
         dates.append(Day(i, datetime.today() + timedelta(i), i == delta))
+
+    load_showtimes()
 
     return render_template(
         "index.html",
