@@ -73,9 +73,13 @@ class Theater:
     longitude: float
     latitude: float
 
-    def getShowtimes(self, date: datetime, page: int = 1, showtimes: list = None) -> list[Showtime]:
+    def getShowtimes(
+        self, date: datetime, page: int = 1, showtimes: list = None, movies: dict[str, Movie] = None
+    ) -> list[Showtime]:
         if showtimes is None:
             showtimes = []
+        if movies is None:
+            movies = {}
 
         datestr = date.strftime("%Y-%m-%d")
         r = requests.get(f"https://www.allocine.fr/_/showtimes/theater-{self.id}/d-{datestr}/p-{page}/")
@@ -93,7 +97,7 @@ class Theater:
             raise Exception(f"API Error: {data}")
 
         for movie in data["results"]:
-            inst = Movie(movie["movie"])
+            inst = movies.setdefault(movie["movie"]["title"], Movie(movie["movie"]))
             movie_showtimes = (
                 movie["showtimes"].get("dubbed", [])
                 + movie["showtimes"].get("original", [])
@@ -104,7 +108,7 @@ class Theater:
                 showtimes.append(Showtime(showtime_data, self, inst))
 
         if int(data["pagination"]["page"]) < int(data["pagination"]["totalPages"]):
-            return self.getShowtimes(date, page + 1, showtimes)
+            return self.getShowtimes(date, page + 1, showtimes, movies)
 
         return showtimes
 

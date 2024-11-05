@@ -19,9 +19,10 @@ for theater in theaters_data:
 
 def getShowtimes(date):
     showtimes: list[Showtime] = []
+    movies_dict: dict[str, Movie] = {}
 
     for theater in theaters:
-        showtimes.extend(theater.getShowtimes(date))
+        showtimes.extend(theater.getShowtimes(date, movies=movies_dict))
 
     movies: list[Movie] = []
 
