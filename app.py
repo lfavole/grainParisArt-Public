@@ -1,27 +1,20 @@
 from dataclasses import dataclass
 from datetime import datetime, timedelta
+import json
+import os
 
+from dotenv import load_dotenv
 from flask import Flask, abort, render_template, request
 
 # IMPORT DES MODULES
 from modules.Classes import Movie, Showtime, Theater
 
-theaters = [
-    Theater("C0071", "Écoles Cinéma Club", None, 2.348973, 48.848363),
-    Theater("C2954", "MK2 Bibliothèque", None, 2.375488, 48.832448),
-    Theater("C0050", "MK2 Beaubourg", None, 2.352312, 48.861584),
-    Theater("W7504", "Épée de bois", None, 2.349555, 48.841300),
-    Theater("C0076", "Cinéma du Panthéon", None, 2.342385, 48.847488),
-    Theater("C0089", "Max Linder Panorama", None, 2.344856, 48.871370),
-    Theater("C0013", "Luminor Hotel de Ville", None, 2.353602, 48.858676),
-    Theater("C0072", "Le Grand Action", None, 2.352129, 48.847530),
-    Theater("C0099", "MK2 Parnasse", None, 2.330526, 48.842813),
-    Theater("C0073", "Le Champo", None, 2.343223, 48.849980),
-    Theater("C0020", "Filmothèque du Quartier Latin", None, 2.342790, 48.849510),
-    Theater("C0074", "Reflet Medicis", None, 2.342790, 48.849510),
-    Theater("C0159", "UGC Ciné Cité Les Halles", None, 2.343014, 48.849777),
-    Theater("C0026", "UGC Ciné Cité Bercy", None, 2.546596, 48.840113),
-]
+load_dotenv()
+
+theaters: list[Theater] = []
+theaters_data = json.loads(os.getenv("THEATERS", "[]"))
+for theater in theaters_data:
+    theaters.append(Theater(theater["id"], theater["name"], None, theater["longitude"], theater["latitude"]))
 
 
 def getShowtimes(date):
@@ -99,7 +92,14 @@ def home():
     for i in range(7):
         dates.append(Day(i, datetime.today() + timedelta(i), i == delta))
 
-    return render_template("index.html", page_actuelle="home", films=showtimes[delta], dates=dates, theaters=theaters)
+    return render_template(
+        "index.html",
+        page_actuelle="home",
+        films=showtimes[delta],
+        dates=dates,
+        theaters=theaters,
+        MAPBOX_ACCESS_TOKEN=os.getenv("MAPBOX_ACCESS_TOKEN", ""),
+    )
 
 
 if __name__ == "__main__":
