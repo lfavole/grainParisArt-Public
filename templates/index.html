@@ -6,87 +6,58 @@
 
 {% block body %}
 
-<a href="#headerTop">
-    <div class="goTop">
-        <p>🍿</p>
-    </div>
-</a>
-
-<img src="../static/images/background.svg" class="background_svg">
-
+<a href="#" class="goTop">🍿</a>
 
 <div id="map"></div>
 
 <div class="planning">
     <div class="container_titrePlanning">
-        <div class="contenu_edt">
-            <h2 class="txt_edt">Emploi du temps</h2>
-            <div class="calendrier">
-            {% for date in dates %}
-                {% if date.choisi %}
-                <div class="date-selectionne">
-                    <p class="jour">{{date.jour}}</p>
-                    <p class="chiffre">{{date.chiffre}}</p>
-                    <p class="mois">{{date.mois}}</p>
-                </div>
-                {% else %}
-                <a href="{{ url_for('home', delta=date.index) }}">
-                    <div class="date">
-                        <p class="jour">{{date.jour}}</p>
-                        <p class="chiffre">{{date.chiffre}}</p>
-                        <p class="mois">{{date.mois}}</p>
-                    </div>
-                </a>
-                {% endif %}
-            {% endfor %}
-            </div>
+        <h2 class="txt_edt">Emploi du temps</h2>
+        <div class="calendrier">
+        {% for date in dates %}
+            <a class="date"{% if not date.choisi %} href="{{ url_for('home', delta=date.index) }}"{% endif %}>
+                <p class="jour">{{ date.jour }}</p>
+                <p class="chiffre">{{ date.chiffre }}</p>
+                <p class="mois">{{ date.mois }}</p>
+            </a>
+        {% endfor %}
         </div>
-        <div class="line"></div>
     </div>
     {% for film in films %}
-    <div class="container_infoFilm">
-        <img src={{ film.affiche }} class="affiche" />
-        <div class="infoFilm">
-            <div class="blur-background"></div>
-            <div>
-                <h3 class="titreFilm"><a href="{{ film.url }}">{{film.title}}</a></h3>
-                <div class="info-content">
-                    <p class="realisateur">Réalisateur : {{film.director}}</p>
-                    <p class="casting">Casting : {{ film.casting }}</p>
-                    <p class="genre">Genre : {{ film.genres }}</p>
-                    <p class="duree">Durée : {{film.duree}}</p>
-                </div>
-                <div class="synopsis_container">
-                    <p class="synopsis">
-                        {{film.synopsis}}
-                    </p>
+        <div class="film">
+            <div class="container_infoFilm">
+                <img src="{{ film.affiche }}" class="affiche" />
+                <div class="infoFilm">
+                    <div>
+                        <h3 class="titreFilm"><a href="{{ film.url }}">{{ film.title }}</a></h3>
+                        <div class="info-content">
+                            <p class="realisateur">Réalisateur : {{ film.director }}</p>
+                            <p class="casting">Casting : {{ film.cast|join(", ") }}</p>
+                            <p class="genre">Genre : {{ film.genres|join(", ") }}</p>
+                            <p class="duree">Durée : {{ film.runtime }}</p>
+                        </div>
+                        <p class="synopsis">
+                            {{ film.synopsis }}
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div style="height: 10px;"></div>
-    {% for cinename, seances in film.seances.items() %}
-    <div class="seance_container">
-        <div class="cinema">
-            <p>{{cinename}}</p>
-        </div>
-        <div class="horaires_container">
-            {% for seance in seances %}
-            <div class="horaire">
-                <p>{{seance}}</p>
+            <div class="seances">
+                {% for cinename, seances in film.seances.items() %}
+                    <div class="seance_container">
+                        <div class="cinema">{{ cinename }}</div>
+                        <div class="horaires_container">
+                            {% for seance in seances %}
+                                <div class="horaire">{{ seance }}</p></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
-    </div>
-    <div class="responsive-petite-div"></div>
     {% endfor %}
-    <div class="responsive-div"></div>
-    {% endfor %}
-
 </div>
-
-
 
 <script>
     mapboxgl.accessToken = '###';
@@ -101,20 +72,9 @@
     map.addControl(new mapboxgl.NavigationControl());
 
     var locations = [
-        { coordinates: [2.348973, 48.848363], description: "Écoles Cinéma club" },
-        { coordinates: [2.546596, 48.840113], description: "UGC Ciné Cité Noisy-le-Grand" },
-        { coordinates: [2.343014, 48.849777], description: "UGC Ciné Cité les Halles" },
-        { coordinates: [2.342790, 48.849510], description: "Reflet Medicis" },
-        { coordinates: [2.342790, 48.849510], description: "Fimothèque du quartier Latin" },
-        { coordinates: [2.343223, 48.849980], description: "Le Champo" },
-        { coordinates: [2.330526, 48.842813], description: "MK2 Parnasse" },
-        { coordinates: [2.352129, 48.847530], description: "Le Grand Action" },
-        { coordinates: [2.353602, 48.858676], description: "Luminor Hotel de Ville" },
-        { coordinates: [2.344856, 48.871370], description: "Max Linder Panorama" },
-        { coordinates: [2.342385, 48.847488], description: "Cinéma du Panthéon" },
-        { coordinates: [2.349555, 48.841300], description: "Épée de bois" },
-        { coordinates: [2.375488, 48.832448], description: "MK2 Bibliothèque" },
-        { coordinates: [2.352312, 48.861584], description: "MK2 Beaubourg" }
+        {% for theater in theaters %}
+        { coordinates: [{{ theater.longitude }}, {{ theater.latitude }}], description: "{{ theater.name }}" },
+        {% endfor %}
     ];
 
     locations.forEach(function (location) {

@@ -18,12 +18,20 @@
     src: url("../font/montserrat_extrabold.ttf");
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     font-family: 'healTheWebA', sans-serif;
+    background-image: url(/static/images/background.svg);
+    background-size: 150vw 100vw;
+    background-repeat: repeat;
+    background-attachment: fixed;
 }
 
-h1 h2 h3 {
+h1, h2, h3 {
     font-family: 'healTheWebB', sans-serif;
 }
 
@@ -31,20 +39,12 @@ h3 {
     font-size: 24px;
 }
 
-.background_svg {
-    position: fixed;
-    top: -30%;
-    left: -10%;
-    z-index: -2;
-    width: 150vw;
-}
-
 p {
     font-size: 20;
     font-family: 'healTheWebA', sans-serif;
 }
 
-.divHeader {
+header {
     margin-left: 10%;
     margin-right: 10%;
     display: flex;
@@ -77,55 +77,36 @@ p {
     margin-right: 10%;
 }
 
-.line {
+/* .container_titrePlanning::after {
+    content: "";
+    display: block;
     width: 100%;
     height: 2px;
     background-image: linear-gradient(90deg, rgba(68, 76, 247, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(2, 0, 36, 1) 100%);
     margin-top: 10px;
     margin-bottom: 20px;
+} */
+
+.container_titrePlanning {
+    padding-bottom: 10px;
+    border-bottom: 2px solid blue;  /* FIXME */
 }
 
 .container_titrePlanning {
     margin-top: 50px;
+    margin-bottom: 20px;
 }
 
-.affiche {
-    width: 200px;
-    height: 288px;
-    border-radius: 5px;
-    padding-right: 30px;
-}
-
-.container_infoFilm {
-    position: relative;
+.container_titrePlanning {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 
-.blur-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(20px);
-    z-index: -1;
-    border-radius: 20px;
-    filter: drop-shadow(0 -6mm 4mm rgba(2, 2, 2, 0.2));
-    filter: drop-shadow(2mm 6mm 6mm rgba(2, 2, 2, 0.2));
-}
-
-.info-content {
-    position: relative;
-    z-index: 1;
-}
-
-.realisateur,
-.duree,
-.casting,
-.genre {
-    margin-top: -20px;
+.txt_edt {
+    display: flex;
+    align-items: end;
+    margin: 0;
 }
 
 .date {
@@ -138,7 +119,13 @@ p {
     justify-content: center;
 }
 
-.date-selectionne {
+.date:not([href]) {
+    background-color: #444cf7;
+    color: white;
+    filter: drop-shadow(2mm 6mm 6mm rgba(2, 2, 2, 0.2));
+}
+
+.date:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -149,6 +136,7 @@ p {
     height: 100px;
     justify-content: center;
     filter: drop-shadow(2mm 6mm 6mm rgba(2, 2, 2, 0.2));
+    transition: all 0.2s ease-in-out;
 }
 
 .mois {
@@ -170,17 +158,60 @@ p {
     margin-bottom: -20px;
 }
 
-.duree {
-    margin-bottom: 45px;
+.film {
+    margin-bottom: 90px;
 }
 
+
+.container_infoFilm {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 15px 15px 60px rgba(2, 2, 2, 0.2);
+    border-radius: 20px;
+}
+.affiche {
+    width: 200px;
+    height: 288px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background-color: #eee;
+}
+.infoFilm {
+    padding-left: 30px;
+}
+.titreFilm {
+    margin-bottom: 8px;
+}
+.realisateur, .casting, .genre, .duree {
+    margin: 0;
+    line-height: 1em;
+}
+.synopsis {
+    max-width: 800px;
+    margin-top: 45px;
+    margin-right: 10%;
+    color: #333;
+}
+
+.seances {
+    margin-top: 10px;
+}
+.seance_container {
+    display: flex;
+    flex-direction: row;
+    margin-right: 10%;
+    margin-left: 10%;
+    margin-top: 10px;
+}
 .cinema {
     background-color: #444cf7;
     border-radius: 5px;
     height: 40px;
     width: 200px;
     color: white;
-    padding-left: 10px;
+    padding: 0 10px;
     box-sizing: border-box;
     align-items: center;
     display: flex;
@@ -189,25 +220,12 @@ p {
     flex-shrink: 0;
     flex-grow: 0;
 }
-
-.horaire_container {
-    background-color: white;
-}
-
-.seance_container {
-    margin-right: 10%;
-    margin-left: 10%;
-    display: flex;
-    flex-direction: row;
-}
-
 .horaires_container {
     display: flex;
     flex-direction: row;
     max-width: 80% - 200px;
     overflow-x: auto;
 }
-
 .horaire {
     background-color: white;
     border-radius: 5px;
@@ -225,6 +243,11 @@ p {
     flex-grow: 0;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
 footer {
     background-color: white;
 }
@@ -235,45 +258,6 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-}
-
-.contenu_edt {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.txt_edt {
-    position: relative;
-    top: 50px;
-}
-
-.synopsis_container {
-    max-width: 800px;
-    margin-right: 10%;
-}
-
-.synopsis {
-    opacity: 0.8;
-}
-
-.date:hover {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #444cf7;
-    color: white;
-    border-radius: 10px;
-    width: 80px;
-    height: 100px;
-    justify-content: center;
-    filter: drop-shadow(2mm 6mm 6mm rgba(2, 2, 2, 0.2));
-    transition: all 0.2s ease-in-out;
-}
-
-a {
-    text-decoration: none;
-    color: black;
 }
 
 #loader {
@@ -339,35 +323,17 @@ a {
     filter: drop-shadow(2mm 6mm 6mm rgba(2, 2, 2, 0.2));
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
-.responsive-div {
-    height: 90px;
-}
-
-.responsive-petite-div {
-    height: 10px;
-}
-
 @media (max-width: 576px) {
-    .contenu_edt {
-        display: flex;
-        flex-direction: column;    
-    }
-    #map {
-        max-width: 100vw;
-        height: 400px;
-        /* width: 350px; */
-        border-radius: 5px;
-    }
     body {
         margin: 0;
         padding: 0;
         overflow-y: auto;
     }
-    .divHeader {
+    p {
+        font-size: 12px;
+        margin-block-start: -5px;
+    }
+    header {
         flex-direction: column;
         max-width: 80vw;
     }
@@ -375,30 +341,36 @@ html {
         margin-block-start: 15px;
         margin-block-end: 0;
     }
-    p{
-        font-size: 12px;
-        margin-block-start: -5px;
+    #map {
+        max-width: 100vw;
+        height: 400px;
+        /* width: 350px; */
+        border-radius: 5px;
+    }
+    .container_titrePlanning {
+        display: flex;
+        flex-direction: column;
     }
     .date {
         width: 40px;
         height: 50px;
     }
-    
-    .date-selectionne {
+
+    .date:not([href]) {
         width: 50px;
         height: 50px;
     }
-    
+
     .mois {
         margin-bottom: 20px;
         font-size: 10px;
     }
-    
+
     .calendrier {
         max-width: 80vw;
         width: 350px;
     }
-    
+
     .chiffre {
         font-size: 20px;
         margin-top: 15px;
@@ -410,9 +382,12 @@ html {
     .txt_edt {
         display: none;
     }
-    .line {
+    .container_titrePlanning::after {
         max-width: 80vw;
         width: 350px;
+    }
+    .film {
+        margin-bottom: 30px;
     }
     .affiche {
         width: 100px;
@@ -436,6 +411,9 @@ html {
     .synopsis{
         display: none;
     }
+    .seances {
+        margin-top: 5px;
+    }
     .cinema {
         height: 30px;
         width: 100px;
@@ -445,15 +423,14 @@ html {
     .horaires_container {
         max-width: 250px;
     }
-    
+
     .horaire {
         height: 30px;
         width: 45px;
         border-radius: 5px;
         margin-left: 5px;
     }
-    .cinema p,
-    .horaire p{
+    .cinema p, .horaire p {
         font-size: 10px;
         margin-block-start: 1em;
     }
@@ -461,12 +438,6 @@ html {
     .container_infoFilm {
         max-width: 80vw;
         width: 350px;
-    }
-    .responsive-div {
-        height: 30px;
-    }
-    .responsive-petite-div {
-        height: 5px;
     }
     .goTop {
         z-index: 2;
@@ -476,38 +447,17 @@ html {
         height: 50px;
         background-color: #444cf7;
         border: #fff solid 4px;
-    }
-    .goTop p{
         font-size: 20px;
-        margin-block-start: 1em;
-        margin-block-end: 1em;
-    }
-    .background_svg {
-        position: fixed;
-        bottom: 0;
-        top: auto;
-        right: 0;
-        z-index: -2;
-        transform: scale(2); 
-    }
-    .blur-background {
-        background: rgba(255, 255, 255, 0.3);
-        backdrop-filter: blur(20px);
-        z-index: -1;
-        border-radius: 5px;
-        filter: drop-shadow(0 -6mm 4mm rgba(2, 2, 2, 0.2));
-        filter: drop-shadow(2mm 6mm 6mm rgba(2, 2, 2, 0.4));
     }
     footer {
         background-color: white;
         padding-top: 10px;
+        font-size: 10px;
     }
-    
+
     .container_footer {
         max-width: 80vw;
-    }
-    .container_footer p{
-        font-size: 10px;
+        flex-direction: column;
     }
     *:not(.affiche) {
         box-sizing: border-box;
