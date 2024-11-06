@@ -60,33 +60,24 @@
 </div>
 
 <script>
-    mapboxgl.accessToken = '{{ MAPBOX_ACCESS_TOKEN }}';
+    var map = L.map('map').setView([48.8566, 2.3522], 12);
 
-    var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [2.3522, 48.8566],
-        zoom: 12
-    });
-
-    map.addControl(new mapboxgl.NavigationControl());
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
 
     var locations = [
         {% for theater in theaters %}
-        { coordinates: [{{ theater.longitude }}, {{ theater.latitude }}], description: "{{ theater.name }}" },
+        { coordinates: [{{ theater.latitude }}, {{ theater.longitude }}], description: "{{ theater.name }}" },
         {% endfor %}
     ];
 
+    var icon = L.divIcon({className: "custom-marker"});
+
     locations.forEach(function (location) {
-        var el = document.createElement('div');
-        el.className = 'custom-marker';
-
-        var popup = new mapboxgl.Popup({ offset: 25 }).setText(location.description);
-
-        new mapboxgl.Marker(el)
-            .setLngLat(location.coordinates)
-            .setPopup(popup)
-            .addTo(map);
+        var marker = L.marker(location.coordinates, {icon: icon}).addTo(map);
+        marker.bindPopup(location.description);
     });
 </script>
 
