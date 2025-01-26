@@ -22,9 +22,11 @@ html {
     scroll-behavior: smooth;
 }
 
+body, input {
+    font-family: 'healTheWebA', sans-serif;    
+}
 body {
     margin: 0;
-    font-family: 'healTheWebA', sans-serif;
     background-image: url(/static/images/background.svg);
     background-size: 150vw 100vw;
     background-repeat: repeat;
@@ -156,6 +158,30 @@ header {
     font-size: 42px;
     margin-top: -20px;
     margin-bottom: -20px;
+}
+
+.search {
+    margin: 1em 10%;
+    font-size: 1.5em;
+}
+.search input[type="text"] {
+    background: none;
+    border: none;
+    border-bottom: 4px solid #888;
+    transition: border-color 0.4s;
+    outline: none;
+    font-size: 1em;
+}
+.search input:focus {
+    border-color: #444cf7;
+}
+.search #clear-search {
+    background: none;
+    border: none;
+    width: 1em;
+    height: 1em;
+    font-size: 1em;
+    cursor: pointer;
 }
 
 .film {

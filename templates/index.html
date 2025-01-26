@@ -23,6 +23,13 @@
         {% endfor %}
         </div>
     </div>
+    <form class="search" action="javascript:;">
+        <label>
+            Rechercher :
+            <input type="text" id="search">
+        </label>
+        <input type="button" id="clear-search" value="×">
+    </div>
     {% for film in films %}
         <div class="film">
             <div class="container_infoFilm">
@@ -57,6 +64,7 @@
             </div>
         </div>
     {% endfor %}
+    <div class="no-movies"{% if films %} style="display: none"{% endif %}>Pas de films...</div>
 </div>
 
 <script>
@@ -78,6 +86,50 @@
     locations.forEach(function (location) {
         var marker = L.marker(location.coordinates, {icon: icon}).addTo(map);
         marker.bindPopup(location.description);
+    });
+
+    // https://stackoverflow.com/a/9310752
+    function escapeRegExp(text) {
+        return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+    }
+
+    window.addEventListener("DOMContentLoaded", function() {
+        var films = document.querySelectorAll(".film");
+        var noMoviesElement = document.querySelector(".no-movies");
+
+        var lastSearchTerm = "";
+        function runSearch() {
+            var searchTerm = searchField.value;
+            if(searchTerm == lastSearchTerm) return;
+            lastSearchTerm = searchTerm;
+
+            var displayed = false;
+            var searchRegex = new RegExp(escapeRegExp(searchTerm), "i");
+            for(var film of films) {
+                var title = film.querySelector(".titreFilm").textContent;
+                if(searchRegex.exec(title)) {
+                    displayed = true;
+                    film.style.display = "block";
+                } else {
+                    film.style.display = "none";
+                }
+            }
+            if(!displayed) {
+                noMoviesElement.style.display = "block";
+            } else {
+                noMoviesElement.style.display = "none";
+            }
+        }
+
+        var searchField = document.getElementById("search");
+        searchField.addEventListener("input", runSearch);
+        runSearch();
+
+        var clearSearchButton = document.getElementById("clear-search");
+        clearSearchButton.addEventListener("click", function() {
+            searchField.value = "";
+            runSearch();
+        });
     });
 </script>
 
