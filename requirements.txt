@@ -1,3 +1,5 @@
-Flask
+dj-database-url
+django
+django-debug-toolbar
 python-dotenv
 requests

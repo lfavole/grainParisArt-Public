@@ -1,0 +1,123 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-31 18:15+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: cinemas/admin.py:24
+msgid "All"
+msgstr "Tout"
+
+#: cinemas/apps.py:9
+msgid "Cinemas"
+msgstr "Cinémas"
+
+#: cinemas/fields.py:14 cinemas/models.py:248
+msgid "Theater"
+msgstr "Cinéma"
+
+#: cinemas/models.py:19 cinemas/models.py:48 cinemas/models.py:76
+#: cinemas/models.py:227
+msgid "ID"
+msgstr "ID"
+
+#: cinemas/models.py:20
+msgid "First name"
+msgstr "Prénom"
+
+#: cinemas/models.py:21
+msgid "Last name"
+msgstr "Nom de famille"
+
+#: cinemas/models.py:27
+msgid "actor"
+msgstr "acteur"
+
+#: cinemas/models.py:28
+msgid "actors"
+msgstr "acteurs"
+
+#: cinemas/models.py:49
+msgid "Name"
+msgstr "Nom"
+
+#: cinemas/models.py:55
+msgid "genre"
+msgstr "genre"
+
+#: cinemas/models.py:56
+msgid "genres"
+msgstr "genres"
+
+#: cinemas/models.py:77
+msgid "Title"
+msgstr "Titre"
+
+#: cinemas/models.py:78 cinemas/models.py:92
+msgid "Runtime"
+msgstr "Durée"
+
+#: cinemas/models.py:79
+msgid "Synopsis"
+msgstr "Synopsis"
+
+#: cinemas/models.py:80
+msgid "Genres"
+msgstr "Genres"
+
+#: cinemas/models.py:81
+msgid "Want to see count"
+msgstr "Personnes intéressées"
+
+#: cinemas/models.py:82
+msgid "Poster"
+msgstr "Affiche"
+
+#: cinemas/models.py:83
+msgid "Cast"
+msgstr "Casting"
+
+#: cinemas/models.py:85
+msgid "Director"
+msgstr "Réalisateur"
+
+#: cinemas/models.py:99
+msgid "movie"
+msgstr "film"
+
+#: cinemas/models.py:100
+msgid "movies"
+msgstr "films"
+
+#: cinemas/models.py:228
+msgid "Start time"
+msgstr "Heure de début"
+
+#: cinemas/models.py:230
+msgid "Movie"
+msgstr "Film"
+
+#: cinemas/models.py:236
+msgid "showtime"
+msgstr "séance"
+
+#: cinemas/models.py:237
+msgid "showtimes"
+msgstr "séances"
+
+#~ msgid "Theater ID"
+#~ msgstr "ID du cinéma"

@@ -1,30 +1,30 @@
 @font-face {
-    font-family: 'healTheWebA';
+    font-family: "healTheWebA";
     src: url("../font/HealTheWebA-Regular.otf");
 }
 
 @font-face {
-    font-family: 'healTheWebB';
+    font-family: "healTheWebB";
     src: url("../font/HealTheWebB-Regular.otf");
 }
 
 @font-face {
-    font-family: 'Raleway-Black';
+    font-family: "Raleway-Black";
     src: url("../font/Raleway-Black.ttf");
 }
 
 @font-face {
-    font-family: 'Montserrat-ExtraBold';
+    font-family: "Montserrat-ExtraBold";
     src: url("../font/montserrat_extrabold.ttf");
 }
 
 body {
     margin: 0;
-    font-family: 'healTheWebA', sans-serif;
+    font-family: "healTheWebA", sans-serif;
 }
 
 h1 h2 h3 {
-    font-family: 'healTheWebB', sans-serif;
+    font-family: "healTheWebB", sans-serif;
 }
 
 h3 {
@@ -41,7 +41,7 @@ h3 {
 
 p {
     font-size: 20;
-    font-family: 'healTheWebA', sans-serif;
+    font-family: "healTheWebA", sans-serif;
 }
 
 .divHeader {
@@ -164,7 +164,7 @@ p {
 }
 
 .chiffre {
-    font-family: 'Montserrat-ExtraBold';
+    font-family: "Montserrat-ExtraBold";
     font-size: 42px;
     margin-top: -20px;
     margin-bottom: -20px;
@@ -354,7 +354,7 @@ html {
 @media (max-width: 576px) {
     .contenu_edt {
         display: flex;
-        flex-direction: column;    
+        flex-direction: column;
     }
     #map {
         max-width: 100vw;
@@ -383,22 +383,22 @@ html {
         width: 40px;
         height: 50px;
     }
-    
+
     .date-selectionne {
         width: 50px;
         height: 50px;
     }
-    
+
     .mois {
         margin-bottom: 20px;
         font-size: 10px;
     }
-    
+
     .calendrier {
         max-width: 80vw;
         width: 350px;
     }
-    
+
     .chiffre {
         font-size: 20px;
         margin-top: 15px;
@@ -445,7 +445,7 @@ html {
     .horaires_container {
         max-width: 250px;
     }
-    
+
     .horaire {
         height: 30px;
         width: 45px;
@@ -488,7 +488,7 @@ html {
         top: auto;
         right: 0;
         z-index: -2;
-        transform: scale(2); 
+        transform: scale(2);
     }
     .blur-background {
         background: rgba(255, 255, 255, 0.3);
@@ -502,7 +502,7 @@ html {
         background-color: white;
         padding-top: 10px;
     }
-    
+
     .container_footer {
         max-width: 80vw;
     }

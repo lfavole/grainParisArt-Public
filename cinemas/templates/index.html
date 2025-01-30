@@ -1,4 +1,8 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load format_runtime %}
+{% load tojson %}
+{% load l10n %}
+{% load static %}
 
 {% block head %}
 
@@ -22,19 +26,19 @@
         <div class="contenu_edt">
             <h2 class="txt_edt">Emploi du temps</h2>
             <div class="calendrier">
-            {% for date in dates %}
-                {% if date.choisi %}
+            {% for delta, date in dates %}
+                {% if date == current_date %}
                 <div class="date-selectionne">
-                    <p class="jour">{{date.jour}}</p>
-                    <p class="chiffre">{{date.chiffre}}</p>
-                    <p class="mois">{{date.mois}}</p>
+                    <p class="jour">{{date|date:"D"}}</p>
+                    <p class="chiffre">{{date.day}}</p>
+                    <p class="mois">{{date|date:"N"}}</p>
                 </div>
                 {% else %}
-                <a href="{{ url_for('home', delta=date.index) }}">
+                <a href="{% url "home" %}?delta={{ delta }}">
                     <div class="date">
-                        <p class="jour">{{date.jour}}</p>
-                        <p class="chiffre">{{date.chiffre}}</p>
-                        <p class="mois">{{date.mois}}</p>
+                        <p class="jour">{{date|date:"D"}}</p>
+                        <p class="chiffre">{{date.day}}</p>
+                        <p class="mois">{{date|date:"N"}}</p>
                     </div>
                 </a>
                 {% endif %}
@@ -43,22 +47,23 @@
         </div>
         <div class="line"></div>
     </div>
+    {% static "images/nocontent.png" as default_poster %}
     {% for film in films %}
     <div class="container_infoFilm">
-        <img src={{ film.affiche }} class="affiche" />
+        <img src="{% firstof film.poster default_poster %}" class="affiche" />
         <div class="infoFilm">
             <div class="blur-background"></div>
             <div>
-                <h3 class="titreFilm"><a href="{{ film.url }}">{{film.title}}</a></h3>
+                <h3 class="titreFilm"><a href="{{ film.url }}">{{ film.title }}</a></h3>
                 <div class="info-content">
                     <p class="realisateur">Réalisateur : {{film.director}}</p>
-                    <p class="casting">Casting : {{ film.casting }}</p>
+                    <p class="casting">Casting : {{ film.cast }}</p>
                     <p class="genre">Genre : {{ film.genres }}</p>
-                    <p class="duree">Durée : {{film.duree}}</p>
+                    <p class="duree">Durée : {{ film.runtime | format_runtime }}</p>
                 </div>
                 <div class="synopsis_container">
                     <p class="synopsis">
-                        {{film.synopsis}}
+                        {{ film.synopsis }}
                     </p>
                 </div>
             </div>
@@ -66,15 +71,16 @@
     </div>
 
     <div style="height: 10px;"></div>
-    {% for cinename, seances in film.seances.items() %}
+    {% regroup film.showtime_set.all by theater as theaters %}
+    {% for theater in theaters %}
     <div class="seance_container">
         <div class="cinema">
-            <p>{{cinename}}</p>
+            <p>{{ theater.grouper.name }}</p>
         </div>
         <div class="horaires_container">
-            {% for seance in seances %}
+            {% for showtime in theater.list %}
             <div class="horaire">
-                <p>{{seance}}</p>
+                <p>{{ showtime.start_time|time:"H:i" }}</p>
             </div>
             {% endfor %}
         </div>
@@ -92,8 +98,8 @@
     mapboxgl.accessToken = {{ mapbox_token | tojson }};
 
     var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
+        container: "map",
+        style: "mapbox://styles/mapbox/streets-v11",
         center: [2.3522, 48.8566],
         zoom: 12
     });
@@ -103,8 +109,8 @@
     var locations = {{ theater_locations | tojson }};
 
     locations.forEach(function (location) {
-        var el = document.createElement('div');
-        el.className = 'custom-marker';
+        var el = document.createElement("div");
+        el.className = "custom-marker";
 
         var popup = new mapboxgl.Popup({ offset: 25 }).setText(location.description);
 
