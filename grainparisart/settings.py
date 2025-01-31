@@ -34,6 +34,9 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = bool(int(os.environ.get("DEBUG") or "0"))
 
 ALLOWED_HOSTS = os.environ.get("HOST", "").split(",") if os.environ.get("HOST") else []
+for env_variable in ["VERCEL_URL", "VERCEL_BRANCH_URL", "VERCEL_PROJECT_PRODUCTION_URL"]:
+    if os.environ.get(env_variable):
+        ALLOWED_HOSTS.append(os.environ.get(env_variable, ""))
 
 
 # Application definition
