@@ -16,7 +16,7 @@ from .utils import parse_runtime
 
 class Actor(models.Model):
     """Actor model."""
-    id = models.IntegerField(_("ID"), primary_key=True)
+    id = models.BigIntegerField(_("ID"), primary_key=True)
     first_name = models.CharField(_("First name"), blank=True, max_length=100)
     last_name = models.CharField(_("Last name"), blank=True, max_length=100)
 
@@ -45,7 +45,7 @@ class Actor(models.Model):
 
 class Genre(models.Model):
     """Genre model."""
-    id = models.IntegerField(_("ID"), primary_key=True)
+    id = models.BigIntegerField(_("ID"), primary_key=True)
     name = models.CharField(_("Name"), max_length=255)
 
     def __str__(self):
@@ -73,7 +73,7 @@ class Genre(models.Model):
 
 class Movie(models.Model):
     """Movie model."""
-    id = models.IntegerField(_("ID"), primary_key=True)
+    id = models.BigIntegerField(_("ID"), primary_key=True)
     title = models.CharField(_("Title"), max_length=255)
     runtime = models.IntegerField(_("Runtime"))
     synopsis = models.TextField(_("Synopsis"))
@@ -224,7 +224,7 @@ class Showtime(models.Model):
     objects = ShowtimeManager()
     all_objects = models.Manager()
 
-    id = models.IntegerField(_("ID"), primary_key=True)
+    id = models.BigIntegerField(_("ID"), primary_key=True)
     start_time = models.DateTimeField(_("Start time"))
     theater_id = TheaterField()
     movie = models.ForeignKey("Movie", verbose_name=_("Movie"), on_delete=models.CASCADE)
